@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2015.3.930/styles/kendo.common.min.css">
+    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2015.3.930/styles/kendo.rtl.min.css">
+    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2015.3.930/styles/kendo.default.min.css">
+    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2015.3.930/styles/kendo.dataviz.min.css">
+    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2015.3.930/styles/kendo.dataviz.default.min.css">
+    <link href="bower_components/kendo-ui-appbuilder-core/styles/kendo.mobile.all.min.css" rel="stylesheet">
+    <link href="styles/main.css" rel="stylesheet">
+    <link href="styles/StyleSheet.css" rel="stylesheet">
+    <!--20151015 Bootstrap Standard 3.3.5-->
+    <link href="styles/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <!--20151015 Bootstrap Standard 3.3.5-->
+    <!-- cordova script (this will be a 404 during development if served with `grunt serve`) -->
+    <script src="cordova.js"></script>
+    <script src="bower_components/kendo-ui-appbuilder-core/js/jquery.min.js"></script>
+    <!--<script src="bower_components/kendo-ui-appbuilder-core/js/kendo.mobile.min.js"></script> -->
+    <script src="bower_components/kendo-ui-appbuilder-core/js/kendo.all.min.js"></script>
+    <script src="bower_components/everlive/min/everlive.all.min.js"></script>
+    <script src="lib/progress/progress.all.min.js"></script>
+    <script src="http://kendo.cdn.telerik.com/2015.3.930/js/cultures/kendo.culture.es-PE.min.js"></script>
+    <script src="app.js"></script> 
+    <!--Descargar los íconos en producción-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+</head>
+
+<body id="kendoUiMobileApp">	
+    <script src="components/funcionalidad05/index.js"></script>
+    <script src="components/funcionalidad04/index.js"></script>
+    <script src="components/funcionalidad03/index.js"></script>
+    <script src="components/funcionalidad02/index.js"></script>
+    <script src="components/funcionalidad01/index.js"></script>
+    <script src="components/homeView/index.js"></script>
+    <div id="layoutMain" data-role="layout" data-id="main">
+        <header data-role="header">
+            <div data-role="navbar">
+                <span data-role="view-title"></span>
+                <a id="MenuPrincipal" data-role="button" href="#appDrawer" data-rel="drawer" data-align="left" data-icon="drawer-button"></a>
+            </div>
+        </header>
+        <!-- application views will be rendered here -->
+    </div>
+    <div data-role="layout" data-id="main-nonav">
+        <header data-role="header">
+            <div data-role="navbar">
+                <span data-role="view-title"></span>
+            </div>
+        </header>
+        <!-- application views will be rendered here -->
+    </div>
+    <div id="appDrawer" data-role="drawer" data-title="" data-swipe-to-open="false">
+        <header data-role="header">
+            <div data-role="navbar">
+                <span data-role="view-title"></span>
+                <img class="logoBase2" src="images/logo-vector.png" />
+            </div>
+        </header>
+        <ul id="navigation-container" data-role="listview">
+            <li id="fun01" style="display:none;">
+                <a href="components/funcionalidad01/view.html">
+                    <i class="fa fa-users"></i>&nbsp;&nbsp;Datos del Cliente
+                </a>
+            </li>
+            <li id="fun02" style="display:none;">
+                <a href="components/funcionalidad02/view.html">
+                    <i class="fa fa-file-text"></i>&nbsp;&nbsp;Seguimiento Ordenes</a>
+            </li>
+            <li id="fun03" style="display:none;"
+                ><a href="components/funcionalidad03/view.html">
+                <i class="fa fa-briefcase"></i>&nbsp;&nbsp;Seguimiento Tareas</a>
+            </li>
+            <li id="fun04" style="display:none;">
+                <a href="components/funcionalidad04/view.html">
+                    <i class="fa fa-file"></i>&nbsp;&nbsp;Reasignación Operaciones</a>
+            </li>
+            <li id="fun05" style="display:none;">
+                <a href="components/funcionalidad05/view.html">
+                    <i class="fa fa-file-image-o"></i>&nbsp;&nbsp;Seguimiento Operaciones</a>
+            </li>
+            
+            <li id="funCS" style="display:none;">
+                <a href="components/homeView/view.html#cerrar" >
+                    <i class="fa fa-sign-in"></i>&nbsp;&nbsp;Cerrar Sesión</a>
+            </li>
+            <li id="funSS" style="display:block;">
+                <a href="components/homeView/view.html" >
+                    <i class="fa fa-sign-out"></i>&nbsp;&nbsp;Iniciar Sesión</a>
+            </li> 
+        </ul>
+        <footer>
+            <div class="footerUsuario" id="fUsuario"></div> 
+        </footer>
+    </div>
+    <!-- Alertas y Notificaciones -> id="notification" -->
+    <span id="notification"></span>
+    <!-- START_CUSTOM_CODE_kendoUiMobileApp -->
+    <!-- END_CUSTOM_CODE_kendoUiMobileApp -->
+</body>
+
+</html>

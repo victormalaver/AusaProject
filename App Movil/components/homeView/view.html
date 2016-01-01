@@ -1,0 +1,73 @@
+<div id="homeView" data-role="view" data-title="Iniciar Sesión" data-layout="main" data-model="app.homeView" data-show="app.homeView.onShow" data-after-show="app.homeView.afterShow">
+    <!-- START_CUSTOM_CODE_homeView -->
+    <!-- END_CUSTOM_CODE_homeView -->
+    
+    <!-- application views will be rendered here -->
+	</br>
+    <div class="c_grupo_login">
+        <div class="c_login_text">
+            Usuario:
+        </div>
+        <input type="text" id="txtsUsuario" value="csaavedra" style="text-align: center; float: left; width: 50%;" class="form-control input-md font-cuerpo" />
+    </div>
+    
+    <div class="c_grupo_login">
+        <div class="c_login_text">
+            Contraseña:
+        </div>
+    	<input type="password" id="txtsContrasenia" value="csaavedra9" style="text-align: center; float: left; width: 50%;" class="form-control input-md font-cuerpo"/>
+    </div>
+    
+    </br>
+
+    <div class="divBotones" style="margin-right: 5%;"> 
+      <button id="GoLogin" data-role="button" class="km-primary km-widget km-button" style="opacity: 1;" onclick="LoginDS();">
+          <span class="km-text">Iniciar Sesión</span>
+      </button> 
+    </div>
+    <div class="divBotones">
+      <button id="GoClean" data-role="button" class="km-primary km-widget km-button" style="opacity: 1;" onclick="CleanDS();">
+          <span class="km-text">Limpiar</span>
+      </button>  
+    </div> 
+    
+    <!--
+      <ul data-role="listview" data-style="inset">
+          <li>
+              <label>
+                  Usuario:
+                  <input type="text" id="txtsUsuario" value="jpatiño" style="text-align: center;" />
+              </label>
+          </li>
+          <li>
+              <label>
+                  Contraseña:
+                  <input type="password" id="txtsContrasenia" value="123" style="text-align: center;" />
+              </label>
+          </li> 
+          <li>
+          	 <div class="divBotones" style="margin-right: 5%;"> 
+                  <button id="GoLogin" data-role="button" class="km-primary km-widget km-button" style="opacity: 1;" onclick="LoginDS();">
+                      <span class="km-text">Iniciar Sesión</span>
+                  </button> 
+              </div>
+              <div class="divBotones">
+                  <button id="GoClean" data-role="button" class="km-primary km-widget km-button" style="opacity: 1;" onclick="CleanDS();">
+                      <span class="km-text">Limpiar</span>
+                  </button>  
+              </div> 
+          </li>
+      </ul>
+	-->
+</div>
+
+<div id="AutenticacionOK" data-role="view" data-title="Bienvenido" data-layout="main" >
+    <div style=" widht:100; padding: 10%; text-align: center;" >
+        <img class="logoBase" src="images/logo-vector.png"><br><br><br>
+        <b><span id="NombreUsuario"></span></b>
+    </div>
+</div>
+
+<div id="cerrar" data-role="view" data-title="Cerrando Sesión" data-layout="main" data-show="cerrarSesion">
+ 	 
+</div>

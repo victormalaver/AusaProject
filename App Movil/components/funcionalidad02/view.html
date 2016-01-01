@@ -1,0 +1,314 @@
+<!-- Inicio formulario -->
+<div id="ListaOrdenes" data-role="view" data-title="Seguimiento de Orden" data-layout="main" data-model="app.funcionalidad06" data-show="app.funcionalidad02.onShow" data-after-show="app.funcionalidad02.afterShow">
+    <div align="center" class="jumbotron" style="background-color:#f4f4f4;">
+        <p style="font-size: 13px !important;font-weight: normal !important;">Indique los datos de la orden que desea hacer seguimiento</p>
+        <div class="input-group col-xs-9">
+            <span class="input-group-addon font-cuerpo">Año de la Orden</span>
+            <input id="f02year" type="number" class="form-control input-lg" placeholder="Año" value="2015">
+        </div>
+        </br>
+        <div class="input-group col-xs-9">
+            <span class="input-group-addon font-cuerpo">Nro de Orden</span>
+            <input id="f02order" type="text" class="form-control input-lg" placeholder="Orden" maxlength="6" onkeypress="return soloNumeros(event);">
+        </div>
+        </br>
+        <button type="button" class="btn btn-warning btn-lg b_color_2 " style="border:#EF7A0D;" onclick="getOrden($('#f02year').val(),$('#f02order').val());"> <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Buscar</button>
+    </div>
+    <!--div id="appendto" class="demo-section k-content"></div-->
+</div>
+<!-- Detalle -->
+<div data-role="view" id="det-orden1" data-title="Seguimiento">
+    <div data-role="navbar">
+        <span data-role="view-title"></span>
+        <a data-role="button" data-align="right" href="#ListaOrdenes"><span class="k-icon k-i-undo"></a>
+    </div>
+    <ul id="det-orden" data-role="listview" class="col-md-12">
+    </ul>
+</div>
+<!-- Templates -->
+<script type="text/x-kendo-tmpl" id="temp01">
+    <!-- temp01 = Régimen IMPO --> 
+    </br>
+    <div class="panel panel-primary border_1 font-cuerpo">
+        <div class="panel-heading centrar b_color_1">Régimen: #:Regimen#</div>
+        <div class="panel-body">
+            <p id="f02NumOrden"></p>
+            #if(Via=="MARITIMO"){#
+            <p>Vía: <i class="fa fa-ship text-muted"></i> #:Via#</p>
+            #} else if (Via=="TERRESTRE"){#
+            <p>Vía: <i class="fa fa-truck text-muted"></i> #:Via#</p>
+            #}else{#
+            <p>Vía: <i class="fa fa-plane text-muted"></i> #:Via#</p>
+            #}# #if(Canal=="V"){#
+            <p>Canal: <i class="fa fa-circle text-success"></i> #:Canal#</p>
+            #} else if (Canal=="N"){#
+            <p>Canal: <i class="fa fa-circle text-warning"></i> #:Canal#</p>
+            #}else{#
+            <p>Canal: <i class="fa fa-circle text-danger"></i> #:Canal#</p>
+            #}#
+            <p>T. Despacho: #:TipoDespacho#</p>
+            <p>Nro de Referencia: #:Referencia#</p>
+            <p>Mercadería: #:Mercaderia#</p>
+        </div>
+    </div>
+    <div class="panel panel-primary font-cuerpo">
+    	<div class="panel-body">
+            <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+            : Realizado &nbsp&nbsp&nbsp&nbsp
+            <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+            : Pendiente
+        </div>
+    </div>
+    
+<div class="list-group font-cuerpo">
+        #if(Referencia==null){#
+            <button type="button" class="list-group-item centrar"> 
+            <span class="glyphicon glyphicon-exclamation-sign text-danger icono_centrado" aria-hidden="true"></span>
+            <span class="span_centro">Apertura de la Orden</span></button>
+        #}else{#
+          <button type="button" class="list-group-item centrar"> 
+            <span class="glyphicon glyphicon-ok text-success icono_centrado icono_sep" aria-hidden="true"></span> 
+            <span class="span_centro">Apertura de la Orden</span> 
+            <span class="span_centro">#:kendo.toString(data.Apertura, "dd/MM/yyyy h:mm:ss tt" )#</span></button>
+        #}# #if(ETAEstimado==null){#
+          <button type="button" class="list-group-item centrar"> 
+            <span class="glyphicon glyphicon-exclamation-sign text-danger icono_centrado" aria-hidden="true"></span> 
+            <span class="span_centro">ETA Estimado</span></button>
+        #}else{#
+          <button type="button" class="list-group-item centrar"> 
+            <span class="glyphicon glyphicon-ok text-success icono_centrado icono_sep" aria-hidden="true"></span> 
+            <span class="span_centro">ETA Estimado</span>
+            <span class="span_centro">#:kendo.toString(data.ETAEstimado, "dd/MM/yyyy h:mm:ss tt")#</span></button>
+        #}# #if(LlegadaNave==null){#
+          <button type="button" class="list-group-item centrar"> 
+            <span class="glyphicon glyphicon-exclamation-sign text-danger icono_centrado" aria-hidden="true"></span> 
+            <span class="span_centro">Llegada de la Nave</span></button>
+        #}else{#
+          <button type="button" class="list-group-item centrar"> 
+            <span class="glyphicon glyphicon-ok text-success icono_centrado" aria-hidden="true"></span> 
+            <span class="span_centro">Llegada de la Nave</span>
+            <span class="span_centro">#:kendo.toString(data.LlegadaNave, "dd/MM/yyyy h:mm:ss tt")#</span></button>
+        #}# #if(DocumentosCompletos==null){#
+          <button type="button" class="list-group-item centrar"> 
+            <span class="glyphicon glyphicon-exclamation-sign text-danger icono_centrado" aria-hidden="true"></span> 
+            <span class="span_centro">Documentos Completos </span></button>
+        #}else{#
+          <button type="button" class="list-group-item centrar"> 
+            <span class="glyphicon glyphicon-ok text-success icono_centrado" aria-hidden="true"></span> 
+            <span class="span_centro">Documentos Completos</span>
+            <span class="span_centro">#:kendo.toString(data.DocumentosCompletos, "dd/MM/yyyy h:mm:ss tt")#<span></button>
+        #}# #if(FechaNumeracion==null){#
+          <button type="button" class="list-group-item centrar"> 
+            <span class="glyphicon glyphicon-exclamation-sign text-danger icono_centrado" aria-hidden="true"></span> 
+            <span class="span_centro">Fecha de Numeración</span></button>
+        #}else{#
+          <button type="button" class="list-group-item centrar"> 
+            <span class="glyphicon glyphicon-ok text-success icono_centrado" aria-hidden="true"></span> 
+            <span class="span_centro">Fecha de Numeración</span>
+            <span class="span_centro">#:kendo.toString(data.FechaNumeracion, "dd/MM/yyyy h:mm:ss tt")#</span></button>
+        #}# #if(FechaCancelacion==null){#
+          <button type="button" class="list-group-item centrar"> 
+            <span class="glyphicon glyphicon-exclamation-sign text-danger icono_centrado" aria-hidden="true"></span> 
+            <span class="span_centro">Fecha de Cancelación</span></button>
+        #}else{#
+          <button type="button" class="list-group-item centrar"> 
+            <span class="glyphicon glyphicon-ok text-success icono_centrado" aria-hidden="true"></span> 
+            <span class="span_centro">Fecha de Cancelación</span>
+            <span class="span_centro">#:kendo.toString(data.FechaCancelacion, "dd/MM/yyyy h:mm:ss tt")#</span></button>
+        #}# #if(AforoCulminado==null){#
+          <button type="button" class="list-group-item centrar"> 
+            <span class="glyphicon glyphicon-exclamation-sign text-danger icono_centrado" aria-hidden="true"></span> 
+            <span class="span_centro">Aforo Culminado</span></button>
+        #}else{#
+          <button type="button" class="list-group-item centrar"> 
+            <span class="glyphicon glyphicon-ok text-success icono_centrado" aria-hidden="true"></span> 
+            <span class="span_centro">Aforo Culminado</span>
+            <span class="span_centro">#:kendo.toString(data.AforoCulminado, "dd/MM/yyyy h:mm:ss tt")#</span></button>
+        #}# #if(LevanteAutorizado==null){#
+          <button type="button" class="list-group-item centrar"> 
+            <span class="glyphicon glyphicon-exclamation-sign text-danger icono_centrado" aria-hidden="true"></span> 
+            <span class="span_centro">Levante Autorizado</span></button>
+        #}else{#
+          <button type="button" class="list-group-item centrar"> 
+            <span class="glyphicon glyphicon-ok text-success icono_centrado" aria-hidden="true"></span> 
+            <span class="span_centro">Levante Autorizado</span>
+            <span class="span_centro">#:kendo.toString(data.LevanteAutorizado, "dd/MM/yyyy h:mm:ss tt")#</span></button>
+        #}# #if(RetiroCulminado==null){#
+          <button type="button" class="list-group-item centrar"> 
+            <span class="glyphicon glyphicon-exclamation-sign text-danger icono_centrado" aria-hidden="true"></span> 
+            <span class="span_centro">Retiro Culminado</span></button>
+        #}else{#
+          <button type="button" class="list-group-item centrar"> 
+            <span class="glyphicon glyphicon-ok text-success icono_centrado" aria-hidden="true"></span> 
+            <span class="span_centro">Retiro Culminado</span>
+            <span class="span_centro">#:kendo.toString(data.RetiroCulminado, "dd/MM/yyyy h:mm:ss tt")#</span></button>
+        #}#
+        <!--
+        <button type="button" class="list-group-item centrar">Apertura de la Orden #:Orden# - #:Referencia#</button>
+        <button type="button" class="list-group-item centrar">ETA Estimado #:ETAEstimado#</button>
+        <button type="button" class="list-group-item centrar">Llegada de la Nave #:LlegadaNave#</button>
+        <button type="button" class="list-group-item centrar">Documentos Completos #:DocumentosCompletos#</button>
+        <button type="button" class="list-group-item centrar">Fecha de Numeración #:FechaNumeracion#</button>
+        <button type="button" class="list-group-item centrar">Fecha de Cancelación #:FechaCancelacion#</button>
+        <button type="button" class="list-group-item centrar">Aforo Culminado #:AforoCulminado#</button>
+        <button type="button" class="list-group-item centrar">Levante Autorizado #:LevanteAutorizado#</button>
+        <button type="button" class="list-group-item centrar">Retiro Culminado #:RetiroCulminado#</button>
+        -->
+    </div>
+
+
+
+    
+</script>
+<script type="text/x-kendo-tmpl" id="temp02">
+    <!-- temp02 = Régimen EXPO --> 
+    </br>
+    <div class="panel panel-primary border_1 font-cuerpo">
+        <div class="panel-heading centrar b_color_1">Régimen: #:Regimen#</div>
+        <div class="panel-body">
+            <p id="f02NumOrden"></p>
+            #if(Via=="MARITIMO"){#
+            <p>Vía: <i class="fa fa-ship text-muted"></i> #:Via#</p>
+            #} else if (Via=="TERRESTRE"){#
+            <p>Vía: <i class="fa fa-truck text-muted"></i> #:Via#</p>
+            #}else{#
+            <p>Vía: <i class="fa fa-plane text-muted"></i> #:Via#</p>
+            #}# #if(Canal=="V"){#
+            <p>Canal: <i class="fa fa-circle text-success"></i> #:Canal#</p>
+            #} else if (Canal=="N"){#
+            <p>Canal: <i class="fa fa-circle color_2"></i> #:Canal#</p>
+            #}else{#
+            <p>Canal: <i class="fa fa-circle text-danger"></i> #:Canal#</p>
+            #}#
+            <p>Nro de Referencia: #:Referencia#</p>
+            <p>Mercadería: #:Mercaderia#</p>
+        </div>
+    </div>
+    <div class="panel panel-primary font-cuerpo">
+    	<div class="panel-body">
+            <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+            : Realizado &nbsp&nbsp&nbsp&nbsp
+            <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+            : Pendiente
+        </div>
+    </div>
+    
+<div class="list-group font-cuerpo">
+        #if(IniciarTramite==null){#
+        <button type="button" class="list-group-item centrar">  
+          <span class="glyphicon glyphicon-exclamation-sign text-danger icono_centrado" aria-hidden="true"></span> 
+          <span class="span_centro">Se recibieron instrucciones para iniciar el trámite</span></button>
+        #}else{#
+        <button type="button" class="list-group-item centrar">  
+          <span class="glyphicon glyphicon-ok text-success icono_sep icono_centrado" aria-hidden="true"></span> 
+          <span class="span_centro">Se recibieron instrucciones para iniciar el trámite</span>
+          <span class="span_centro">#:kendo.toString(data.IniciarTramite, "dd/MM/yyyy h:mm:ss tt")#</span></button>
+        #}# #if(ESC==null){#
+        <button type="button" class="list-group-item centrar">  
+          <span class="glyphicon glyphicon-exclamation-sign text-danger icono_centrado" aria-hidden="true"></span> 
+          <span class="span_centro">ESC instruye ingreso / llenado</span></button>
+        #}else{#
+        <button type="button" class="list-group-item centrar">  
+          <span class="glyphicon glyphicon-ok text-success icono_sep icono_centrado" aria-hidden="true"></span> 
+          <span class="span_centro">ESC instruye ingreso / llenado</span>
+          <span class="span_centro">#:kendo.toString(data.ESC, "dd/MM/yyyy h:mm:ss tt")#</span></button>
+        #}# #if(DAM==null){#
+        <button type="button" class="list-group-item centrar">  
+          <span class="glyphicon glyphicon-exclamation-sign text-danger icono_centrado" aria-hidden="true"></span> 
+          <span class="span_centro">DAM numerada provisional</span></button>
+        #}else{#
+        <button type="button" class="list-group-item centrar">  
+          <span class="glyphicon glyphicon-ok text-success icono_sep icono_centrado" aria-hidden="true"></span> 
+          <span class="span_centro">DAM provisional numerada</span>
+          <span class="span_centro">#:kendo.toString(data.DAM, "dd/MM/yyyy h:mm:ss tt")#</span></button>
+        #}# #if(DAMFisico==null){#
+        <button type="button" class="list-group-item centrar">  
+          <span class="glyphicon glyphicon-exclamation-sign text-danger icono_centrado" aria-hidden="true"></span> 
+          <span class="span_centro">DAM seleccionada a control documentario o aforo físico</span></button>
+        #}else{#
+        <button type="button" class="list-group-item centrar">  
+          <span class="glyphicon glyphicon-ok text-success icono_sep icono_centrado" aria-hidden="true"></span> 
+          <span class="span_centro">DAM seleccionada a control documentario o aforo físico</span>
+          <span class="span_centro">#:kendo.toString(data.DAMFisico, "dd/MM/yyyy h:mm:ss tt")#</span></button>
+        #}# #if(MercanciaPuerto==null){#
+        <button type="button" class="list-group-item centrar">  
+          <span class="glyphicon glyphicon-exclamation-sign text-danger icono_centrado" aria-hidden="true"></span> 
+          <span class="span_centro">Mercancía ingresada al depósito temporal / Puerto</span></button>
+        #}else{#
+        <button type="button" class="list-group-item centrar">  
+          <span class="glyphicon glyphicon-ok text-success icono_sep icono_centrado" aria-hidden="true"></span> 
+          <span class="span_centro">Mercancía ingresada al depósito temporal / Puerto</span>
+          <span class="span_centro">#:kendo.toString(data.MercanciaPuerto, "dd/MM/yyyy h:mm:ss tt")#</span></button>
+        #}# #if(EmbarqueExito==null){#
+        <button type="button" class="list-group-item centrar">  
+          <span class="glyphicon glyphicon-exclamation-sign text-danger icono_centrado" aria-hidden="true"></span> 
+          <span class="span_centro">Embarque de mercancía concluido con éxito</span></button>
+        #}else{#
+        <button type="button" class="list-group-item centrar">  
+          <span class="glyphicon glyphicon-ok text-success icono_sep icono_centrado" aria-hidden="true"></span> 
+          <span class="span_centro">Embarque de mercancía concluido con éxito</span> 
+          <span class="span_centro">#:kendo.toString(data.EmbarqueExito, "dd/MM/yyyy h:mm:ss tt")#</span></button>
+        #}# #if(TramiteVisto==null){#
+        <button type="button" class="list-group-item centrar">  
+          <span class="glyphicon glyphicon-exclamation-sign text-danger icono_centrado" aria-hidden="true"></span> 
+          <span class="span_centro">Tramite de Visto Bueno Culminado</span></button>
+        #}else{#
+        <button type="button" class="list-group-item centrar">  
+          <span class="glyphicon glyphicon-ok text-success icono_sep icono_centrado" aria-hidden="true"></span> 
+          <span class="span_centro">Tramite de Visto Bueno Culminado</span>
+          <span class="span_centro">#:kendo.toString(data.TramiteVisto, "dd/MM/yyyy h:mm:ss tt")#</span></button>
+        #}# #if(RecepDocs==null){#
+        <button type="button" class="list-group-item centrar">  
+          <span class="glyphicon glyphicon-exclamation-sign text-danger icono_centrado" aria-hidden="true"></span> 
+          <span class="span_centro">Recepción de documentos originales</span></button>
+        #}else{#
+        <button type="button" class="list-group-item centrar">  
+          <span class="glyphicon glyphicon-ok text-success icono_sep icono_centrado" aria-hidden="true"></span> 
+          <span class="span_centro">Recepción de documentos originales </span>
+          <span class="span_centro">#:kendo.toString(data.RecepDocs, "dd/MM/yyyy h:mm:ss tt")#</span></button>
+        #}# #if(DAMDefinitiva==null){#
+        <button type="button" class="list-group-item centrar">  
+          <span class="glyphicon glyphicon-exclamation-sign text-danger icono_centrado" aria-hidden="true"></span> 
+          <span class="span_centro">Numeración DAM definitiva</span></button>
+        #}else{#
+        <button type="button" class="list-group-item centrar">  
+          <span class="glyphicon glyphicon-ok text-success icono_sep icono_centrado" aria-hidden="true"></span> 
+          <span class="span_centro">Numeración DAM definitiva </span>
+          <span class="span_centro">#:kendo.toString(data.DAMDefinitiva, "dd/MM/yyyy h:mm:ss tt")#</span></button>
+        #}# #if(Regularizacion==null){#
+        <button type="button" class="list-group-item centrar">  
+          <span class="glyphicon glyphicon-exclamation-sign text-danger icono_centrado" aria-hidden="true"></span> 
+          <span class="span_centro">Regularización del despacho culminado</span></button>
+        #}else{#
+        <button type="button" class="list-group-item centrar">  
+          <span class="glyphicon glyphicon-ok text-success icono_sep icono_centrado" aria-hidden="true"></span> 
+          <span class="span_centro">Regularización del despacho culminado </span>
+          <span class="span_centro">#:kendo.toString(data.Regularizacion, "dd/MM/yyyy h:mm:ss tt")#</span></button>
+        #}# #if(DAMcliente==null){#
+        <button type="button" class="list-group-item centrar">  
+          <span class="glyphicon glyphicon-exclamation-sign text-danger icono_centrado" aria-hidden="true"></span> 
+          <span class="span_centro">Se envió DAM regularizada al cliente</span></button>
+        #}else{#
+        <button type="button" class="list-group-item centrar">  
+          <span class="glyphicon glyphicon-ok text-success icono_sep icono_centrado" aria-hidden="true"></span> 
+          <span class="span_centro">Se envió DAM regularizada al cliente</span>
+          <span class="span_centro">#:kendo.toString(data.DAMcliente, "dd/MM/yyyy h:mm:ss tt")#</span></button>
+        #}#
+        <!--
+        <button type="button" class="list-group-item centrar"> Se recibieron instrucciones para iniciar el tramite #:IniciarTramite#</button>
+        <button type="button" class="list-group-item centrar"> ESC instruye ingreso / llenado #:ESC#</button>
+        <button type="button" class="list-group-item centrar"> DAM provisional numerada #:DAM#</button>
+        <button type="button" class="list-group-item centrar"> DAM seleccionada a control documentario o aforo físico #:DAMFisico#</button>
+        <button type="button" class="list-group-item centrar"> Mercancía ingresada al depósito temporal / Puerto #:MercanciaPuerto#</button>
+        <button type="button" class="list-group-item centrar"> Embarque de mercancía concluido con éxito #:EmbarqueExito#</button>
+        <button type="button" class="list-group-item centrar"> Tramite de Visto Bueno Culminado #:TramiteVisto#</button>
+        <button type="button" class="list-group-item centrar"> Recepción de documentos originales #:RecepDocs#</button>
+        <button type="button" class="list-group-item centrar"> Numeración DAM definitiva #:DAMDefinitiva#</button>
+        <button type="button" class="list-group-item centrar"> Regularización del despacho culminado #:Regularizacion#</button>
+        <button type="button" class="list-group-item centrar"> Se envió DAM regularizada al cliente #:DAMcliente#</button>
+        -->
+    </div>
+
+
+</script>
+<!-- End Templates -->

@@ -1,0 +1,59 @@
+<!-- Acción Tipo de Tarea: Add Insert Delete -->
+<div data-role="view" id="vistaTipoTareas" data-title="Tipos de Tarea">
+    <div data-role="navbar">
+        <span data-role="view-title"></span>
+        <a data-role="button" data-align="right" href="#tareas1"><span class="k-icon k-i-undo"></a>
+    </div>
+    <div id="administrarTipoTareas" class="font-cuerpo"></div>
+    <div class="row contenedorBusqueda">
+        <div class="col-xs-6">
+            <button type="button" class="btn btn-default btn-block font-boton b_color_2 tex_boton_2" data-role="button" onclick="$('#modalConfirmarDeleteTT').data('kendoMobileModalView').open();"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Eliminar</button>
+        </div>
+        <div class="col-xs-6">
+            <button type="button" class="btn btn-default btn-block font-boton b_color_2 tex_boton_2" data-role="button" onclick="accionTT('tipoInsert');"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Agregar</button>
+        </div>
+    </div>
+</div>
+<!-- End -->
+<!-- Template Modal Add y edit Tipo de Tarea-->
+<div data-role="modalview" id="modalAddTipoTarea" style="width: 300px; height: 300px">
+    </br>
+    <form class="col-md-12">
+        <input id="txtidTT" type="hidden" placeholder="tiptar_int_id">
+        <div class="form-group">
+            <label class="control-label font-cuerpo" for="txtnombre">Tipo</label>
+            <div>
+                <input id="txtnombre" type="text" placeholder="Tipo de tarea" class="form-control input-md font-cuerpo" required="">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label font-cuerpo" for="txtdescripcion">Descripción</label>
+            <div>
+                <textarea id="txtdescripcion" class="form-control font-cuerpo" rows="5" placeholder="Descripción de tarea"></textarea>
+            </div>
+        </div>
+    </form>
+    <div>
+        <div class="col-xs-6">
+            <button type="button" class="btn btn-default btn-block font-boton b_color_2 tex_boton_2" data-role="button" onclick="$('#modalAddTipoTarea').data('kendoMobileModalView').close();">Cancelar</button>
+        </div>
+        <div class="col-xs-6">
+            <button id="btnTT" value="tipoInsert" type="button" class="btn btn-default btn-block font-boton b_color_2 tex_boton_2" data-role="button" onclick="accionTipoTarea(this.value);"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Agregar</button>
+        </div>
+    </div>
+</div>
+<!-- End -->
+<!-- Template Modal Eliminar Tipo de Tarea-->
+<div data-role="modalview" id="modalConfirmarDeleteTT" style="width: 300px; height: 120px">
+    <h2 class="font-cuerpo">¿Realmente desea eliminar los tipos de tarea seleccionados?</h2>
+    </br>
+    <div>
+        <div class="col-xs-6">
+            <button type="button" class="btn btn-default btn-block font-boton" onclick="$('#modalConfirmarDeleteTT').data('kendoMobileModalView').close();">Cancelar</button>
+        </div>
+        <div class="col-xs-6">
+            <button id="btnTTdel" type="button" class="btn btn-default btn-block font-boton" onclick="accionTipoTarea('tipoDelete');">Aceptar</button>
+        </div>
+    </div>
+</div>
+<!-- End-->
